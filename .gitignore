@@ -1,5 +1,3 @@
 .env
 node_modules/
 database.db
-public/test_p5.html
-public/Poster-3.png
