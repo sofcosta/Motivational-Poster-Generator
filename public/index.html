@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Client Page</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.0/p5.js"
+        integrity="sha512-2r+xZ/Dm8+HI0I8dsj1Jlfchv4O3DGfWbqRalmSGtgdbVQrZyGRqHp9ek8GKk1x8w01JsmDZRrJZ4DzgXkAU+g=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body>
+
+    <nav style="display: flex; justify-content: space-between;">
+        <h1>Motivational Poster Generator</h1>
+        <a href="gallery.html">Gallery</a>
+    </nav>
+    <main>
+        <!--
+        <a href="gallery.html">Gallery</a></br>
+        <input id="keyword_1" placeholder="keyword 1" /> 
+        <input id="keyword_2" placeholder="keyword 2" />
+        <button id="submit">submit</button></br>-->
+
+        <container>
+            <div id="poster" style="display: inline; position: relative;">
+                <div id="before_making_poster">Do you want to create a poster? Just write two words and click <i>Create
+                        Motivational Poster</i>.</div>
+                <div id="making_poster">Making Motivational Poster...</div>
+            </div>
+            <div style="position: relative;">
+                <div id="tool">
+                    <input class="keyword item" id="keyword_1" placeholder="keyword 1" /> <!--value="chocolate"-->
+                    <input class="keyword item" id="keyword_2" placeholder="keyword 2" /> <!--value="house"-->
+                    <button id="submit" class="special_button item">Create Motivational Poster</button>
+                    <div class="item" style="grid-column: 1 / span 3; height: 150px;"></div>
+
+                    <!-- Text Align -->
+                    <div id="align_options" class="item">
+                        <button id="left" class="text_align" value="LEFT"><img src="imgs/Left.svg" alt="left align"
+                                width="25px"></button>
+                        <button id="center" class="text_align" value="CENTER"><img src="imgs/Center.svg"
+                                alt="center align" width="25px"></button>
+                        <button id="right" class="text_align" value="RIGHT"><img src="imgs/Right.svg" alt="right align"
+                                width="25px"></button>
+                    </div>
+
+                    <!-- Text case -->
+                    <div id="case_options" class="item">
+                        <button id="uppercase" class="text_case" value="true">AA</button>
+                        <button id="lowercase" class="text_case" value="false">Aa</button>
+                    </div>
+
+                    <!-- Text Style -->
+                    <div id="style_options" class="item">
+                        <button id="normal" class="text_style" value="NORMAL">Aa</button>
+                        <button id="italic" class="text_style" value="ITALIC"><i>Aa</i></button>
+                        <button id="bold" class="text_style" value="BOLD"><b>Aa</b></button>
+                        <button id="bolditalic" class="text_style" value="BOLDITALIC"><i><b>Aa</b></i></button>
+                    </div>
+
+                    <!-- Text Font and Size -->
+                    <div class="item">
+                        <p>Font</p>
+                        <input class="tool_input" type="range" min="1" max="5" value="1" id="font_family">
+                    </div>
+                    <div class="item">
+                        <p>Font Size</p>
+                        <input class="tool_input" type="range" min="0.01" max="0.08" value="0.04" step="0.01"
+                            id="text_size">
+                    </div>
+
+                    <!-- Color -->
+                    <div id="color_options" class="item">
+                        <button id="white" class="color_button" value="255">
+                            <div></div>
+                        </button>
+                        <button id="black" class="color_button" value="0">
+                            <div style="background-color: black;"></div>
+                        </button>
+                        <button id="color" class="color_button" value="-1">
+                            <div></div>
+                        </button>
+                    </div>
+
+                    <!-- Position and Width -->
+                    <div class="item">
+                        <p>Horizontal position</p>
+                        <input class="tool_input pos" type="range" min="1" max="5" value="2" id="pos_x">
+                    </div>
+                    <div class="item">
+                        <p>Vertical position</p>
+                        <input class="tool_input pos" type="range" min="1" max="8" value="3" id="pos_y">
+                    </div>
+                    <div class="item">
+                        <p>Width of Text</p>
+                        <input class="tool_input pos" type="range" min="4" max="8" value="6" id="size">
+                    </div>
+                </div>
+
+                <div id="templates" style="display: flex; justify-content: space-evenly;">
+                    <button id="template_1" class="template_button" value="1">Template 1</button>
+                    <button id="template_2" class="template_button" value="2">Template 2</button>
+                    <button id="template_3" class="template_button" value="3">Template 3</button>
+                    <button id="template_4" class="template_button" value="4">Template 4</button>
+                    <button id="template_5" class="template_button" value="5">Template 5</button>
+                </div>
+
+                <div style="position: absolute; right: 0; bottom: 0; margin: 60px;">
+                    <button onclick="PrintDiv()" class="special_button">Download</button>
+                    <button id="saveToGallery" class="special_button">Save to gallery</button>
+                </div>
+            </div>
+        </container>
+        <script>
+            function PrintDiv() {
+                console.log('downloading...');
+                const div = document.querySelector("#canvas_p5");
+                html2canvas(div).then(canvas => {
+                    var myImage = canvas.toDataURL();
+                    downloadURI(myImage, "Poster.png");
+                });
+            }
+
+            function downloadURI(uri, name) {
+                var link = document.createElement("a");
+                link.download = name;
+                link.href = uri;
+                document.body.appendChild(link);
+                link.click();
+                //after creating link you should delete dynamic link
+                //clearDynamicLink(link); 
+            }
+        </script>
+    </main>
+    <script src="main.js"></script>
+</body>
+
+</html>

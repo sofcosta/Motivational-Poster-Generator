@@ -1,0 +1,70 @@
+body {
+    font-family: sans-serif;
+}
+
+#container {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    width: 100%;
+}
+
+#container::after {
+    content: "";
+    flex: auto;
+}
+
+.poster {
+    position: relative;
+    justify-self: center;
+    align-self: center;
+}
+
+.poster img {
+    margin: 2vw;
+    position: relative;
+    text-align: center;
+    width: 20vw;
+}
+
+.poster:hover img {
+    margin: 0;
+    width: 24vw;
+}
+
+.smaller img {
+    margin: 1vw;
+    position: relative;
+    text-align: center;
+    width: 10vw;
+}
+
+.poster:hover .smaller img {
+    margin: 0;
+    width: 12vw;
+}
+
+h1 {
+    margin: 20px;
+}
+
+a {
+    text-decoration: none;
+    color: #000000;
+    margin: 20px;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/*
+button {
+    display: none;
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+}
+
+.poster:hover button {
+    display: block;
+}*/

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="galleryStyle.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <title>Gallery</title>
+</head>
+
+<body>
+    <nav style="display: flex; justify-content: space-between;">
+        <h1>Gallery</h1>
+        <!--
+        <button id="smaller">smaller</button>
+        <button>bigger</button>-->
+        <a href="index.html">Motivational Poster Generator</a>
+    </nav>
+    <!--<img src="img_files/1701965802561.txt">-->
+    <main>
+        <container id="container"></container>
+        <script>
+            const container = document.querySelector('#container');
+            getData();
+            async function getData() {
+                const response = await fetch('/db');
+                const data = await response.json();
+
+                for (item of data) {
+                    if (item.image64 != null) {
+                        const div = document.createElement('div');
+                        div.classList.add('poster');
+                        //const downloadButton = document.createElement('button');
+                        //downloadButton.innerHTML = 'Download';
+                        const image = document.createElement('img');
+                        image.id = item.timestamp;
+                        //downloadButton.addEventListener('click', PrintDiv(image.id));
+                        //downloadButton.onclick = PrintDiv(image.id);
+                        fetch(item.image64)
+                            .then((res) => res.text())
+                            .then((text) => {
+                                image.src = text;
+                                //console.log('image64');
+                                div.append(image);
+                                //div.append(downloadButton);
+                                container.append(div);
+                                //container.append(image);
+                                //console.log(text);
+                            })
+                            .catch((e) => console.error(e));
+
+                    }
+                }
+                //console.log(data);
+            }
+
+            document.querySelector('#smaller').addEventListener('click', event => {
+                document.querySelectorAll('.poster').forEach(item => {
+                    item.classList.add('smaller');
+                })
+            });
+
+            /*
+                        function PrintDiv(id) {
+                            console.log("downloading...");
+                            const div = document.getElementById(id);
+                            html2canvas(div).then(canvas => {
+                                var myImage = canvas.toDataURL();
+                                downloadURI(myImage, "Poster.png");
+                            });
+                        }
+            
+                        function downloadURI(uri, name) {
+                            var link = document.createElement("a");
+                            link.download = name;
+                            link.href = uri;
+                            document.body.appendChild(link);
+                            link.click();
+                            //after creating link you should delete dynamic link
+                            //clearDynamicLink(link); 
+                        }
+                        */
+        </script>
+    </main>
+</body>
+
+</html>
