@@ -56,15 +56,3 @@ a {
 a:hover {
     text-decoration: underline;
 }
-
-/*
-button {
-    display: none;
-    position: absolute;
-    right: 10px;
-    bottom: 10px;
-}
-
-.poster:hover button {
-    display: block;
-}*/

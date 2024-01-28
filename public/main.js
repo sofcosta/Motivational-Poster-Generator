@@ -1,4 +1,3 @@
-//import html2canvas from 'html2canvas';
 const button = document.getElementById("submit");
 const object = {};
 
@@ -27,7 +26,6 @@ button.addEventListener("click", async (event) => {
     const theme = full_msg[1].replace(/[&\/\\#+-:.()$~%"*<>{}]/g, '').trim();
     console.log(quote);
     console.log(theme);
-    //document.querySelector('#quote p').textContent = quote;
 
     const options_image = {
         method: "POST",
@@ -41,8 +39,6 @@ button.addEventListener("click", async (event) => {
     console.log(json);
 
     // Image
-
-    // Verificar tamanho do array
     const nPhotos_aux = json.photos.length;
     let max = 25;
     if (nPhotos_aux != max) max = nPhotos_aux;
@@ -50,18 +46,12 @@ button.addEventListener("click", async (event) => {
     const image_number = Math.floor(Math.random() * max);
     console.log('nPhotos_aux: ' + nPhotos_aux + ', image_number: ' + image_number);
     //console.log(image_number);
-    // const image_url = json.photos[image_number].src.large;
 
     const image_url = json.photos[image_number].src.original;
-
     const image_avg_color = json.photos[image_number].avg_color;
-
     const textColor = invertColor(image_avg_color);
 
-    //document.getElementById('img').src = image_url;
-
     loadImageAfter(image_url, quote, image_avg_color);
-
 
     // Database
     object.keyword_1 = keyword_1;
@@ -80,7 +70,6 @@ document.getElementById("saveToGallery").addEventListener("click", () => {
     html2canvas(div).then(async canvas => {
         let image64 = canvas.toDataURL();
         object.image64 = image64;
-        // console.log('image64 in database');
         console.log(object);
         alert("Your poster was successfully saved to the gallery!");
 
@@ -153,45 +142,36 @@ function draw() {
         if (text_align == 'LEFT' || text_align == LEFT) {
             textAlign(LEFT);
             // To inform what is the active option
-            //removeClass('.text_align', 'text_align_chosen');
             document.querySelector('#left').classList.add('text_align_chosen');
         } else if (text_align == 'CENTER' || text_align == CENTER) {
             textAlign(CENTER);
-            //removeClass('.text_align', 'text_align_chosen');
             document.querySelector('#center').classList.add('text_align_chosen');
         } else if (text_align == 'RIGHT' || text_align == RIGHT) {
             textAlign(RIGHT);
-            //removeClass('.text_align', 'text_align_chosen');
             document.querySelector('#right').classList.add('text_align_chosen');
         }
 
         // Text Case
         if (text_case == true || text_case == 'true') {
             quote = aux_quote.toUpperCase();
-            //removeClass('.text_case', 'button_chosen');
             document.querySelector('#uppercase').classList.add('button_chosen');
         } else if (text_case == false || text_case == 'false') {
             quote = aux_quote;
-            //removeClass('.text_case', 'button_chosen');
             document.querySelector('#lowercase').classList.add('button_chosen');
         }
 
         // Text Style
         if (text_style == 'NORMAL' || text_style == NORMAL) {
             textStyle(NORMAL);
-            //removeClass('.text_style', 'button_chosen');
             document.querySelector('#normal').classList.add('button_chosen');
         } else if (text_style == 'BOLD' || text_style == BOLD) {
             textStyle(BOLD);
-            //removeClass('.text_style', 'button_chosen');
             document.querySelector('#bold').classList.add('button_chosen');
         } else if (text_style == 'ITALIC' || text_style == ITALIC) {
             textStyle(ITALIC);
-            //removeClass('.text_style', 'button_chosen');
             document.querySelector('#italic').classList.add('button_chosen');
         } else if (text_style == 'BOLDITALIC' || text_style == BOLDITALIC) {
             textStyle(BOLDITALIC);
-            //removeClass('.text_style', 'button_chosen');
             document.querySelector('#bolditalic').classList.add('button_chosen');
         }
 
